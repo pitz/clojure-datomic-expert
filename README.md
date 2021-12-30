@@ -1,8 +1,8 @@
 # Learning Datalog
 
-Com este repositório eu coloco em prática um pouco de meus estudos sobre o Datalog, linguagem utilizada para efetuar queries em um banco de dados Datomic.
+![image](https://user-images.githubusercontent.com/42384045/147756710-bc4e5973-ec32-4b32-87e6-82e4d1cd215d.png)
 
-Neste projeto teremos duas entidades: `Customer` e `Group`. Um customer pertence a um grupo e um grupo pode conter diversos customers.
+Com este repositório eu coloco em prática um pouco de meus estudos sobre o Datalog, linguagem utilizada para efetuar queries em um banco de dados Datomic. Neste projeto teremos duas entidades: `Customer` e `Group`. Um customer pertence a um grupo e um grupo pode conter diversos customers.
 
 Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
 
