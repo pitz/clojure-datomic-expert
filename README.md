@@ -140,3 +140,18 @@ Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
 ; Eu ainda não consegui retornar um max n com outro campo junto.. 
 ; retornar somente os top 3 valores não me parece o tipo de operação mais útil do mundo :)
 ```
+
+### Usando sub-query para retornar o Customer com o menor limite
+```clojure
+(defn get-customers-com-o-pior-limite []
+  (d/q '[:find  ?customer-name ?customer-id ?customer-limit
+         :keys  customer/name customer/id customer/limit
+         :with  ?customer
+         :where [(q '[:find (min ?customer-limit) :where [_ :customer/limit ?customer-limit]] $) [[?customer-limit]]]
+                [?customer :customer/limit ?customer-limit] 
+                [?customer :customer/id ?customer-id]
+                [?customer :customer/name ?customer-name]]
+       (db.boostrap/get-db)))
+
+(get-customers-com-o-pior-limite)
+```
