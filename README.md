@@ -47,8 +47,8 @@ Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
 (defn listar-nomes-com-limit-ge [limit-value]
   (println " @ listar-nomes-com-limit-ge: ")
   (d/q '[:find  ?name
-				  :in    $ ?limit-ge
-				  :where [?customer :customer/name ?name]
+         :in    $ ?limit-ge
+	 :where [?customer :customer/name ?name]
                 [?customer :customer/limit ?limit]
                 [(>= ?limit ?limit-ge)]]
        (db.boostrap/get-db) limit-value))
@@ -61,13 +61,14 @@ Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
 ```clojure
 (defn listar-nomes-com-inicial [initial-name-str]
   (println " @ listar-nomes-com-inicial" initial-name-str ":")
-  (d/q'[:find ?name
-        :in   $ ?initial-name-str
-        :where[?customer :customer/name ?name]
-              [(.startsWith?name ?initial-name-str)]
+  (d/q'[:find  ?name
+        :in    $ ?initial-name-str
+        :where [?customer :customer/name ?name]
+               [(.startsWith ?name ?initial-name-str)]
        (db.boostrap/get-db) initial-name-str))
 
-; Assim como foi feito no exemplo anterior, usamos uma **função.** Aqui, nosso objetivo é encontrar registros que iniciem com uma String em específico.
+; Assim como foi feito no exemplo anterior, usamos uma **função.** 
+; Aqui, nosso objetivo é encontrar registros que iniciem com uma String em específico.
 ```
 
 ### Usando transformation-functions para manipular o retorno de uma query:
@@ -78,24 +79,26 @@ Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
 (defn listar-nomes-with-transformation-function []
   (println " @ listar-nomes: ")
   (d/q '[:find  ?parsed-name
-         :where [?customer:customer/name ?name]
+         :where [?customer :customer/name ?name]
                 [(datomicexpert.core/parse-name ?name) ?parsed-name]]
         (db.boostrap/get-db)))
 
-; Através de uma transformation-function, podemos definir como a nossa query deve retornar um valor. No exemplo acima, criamos uma nova String a partir do ?name de cada customer.
+; Através de uma transformation-function, podemos definir como a nossa query deve retornar um valor. 
+; No exemplo acima, criamos uma nova String a partir do ?name de cada customer.
 ```
 
 ### Retornando dados de duas tabelas:
 
 ```clojure
 (defn listar-nomes-e-grupos []
-  (d/q '[:find?customer-name ?group-name
+  (d/q '[:find ?customer-name ?group-name
          :where [?customer :customer/name ?customer-name]
                 [?customer :customer/group ?group]
                 [?group    :group/name ?group-name]]
        (db.boostrap/get-db)))
 
-; da maneira acima, conseguimos retornar o nome do customer e o nome do grupo.. contudo, o output deste método é um vetor... não me parece ser a melhor maneira de lidar com isso. 
+; da maneira acima, conseguimos retornar o nome do customer e o nome do grupo.. 
+; contudo, o output deste método é um vetor... não me parece ser a melhor maneira de lidar com isso. 
 
 ; O próximo exemplo fará a nossa vida ser mais fácil.
 ```
@@ -105,8 +108,8 @@ Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
 ```clojure
 (defn listar-nomes-e-grupos []
   (d/q '[:find  ?customer-name ?group-name
-					:keys  customer/name group/name
-					:where [?customer :customer/name ?customer-name]
+         :keys  customer/name group/name
+	 :where [?customer :customer/name ?customer-name]
                 [?customer :customer/group ?group]
                 [?group    :group/name ?group-name]]
        (db.boostrap/get-db)))
@@ -119,13 +122,14 @@ Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
 ```clojure
 (defn count-customers-from-group []
   (d/q '[:find  ?group-name (count ?customer-name)
-			   	:keys  group/name customers-count
-				  :where [?customer :customer/name ?customer-name]
-				         [?customer :customer/group ?group]
+         :keys  group/name customers-count
+	 :where [?customer :customer/name ?customer-name]
+	        [?customer :customer/group ?group]
                 [?group :group/name ?group-name]]
        (db.boostrap/get-db)))
 
-; O count nos permite retornar a quantidade de Customers de cada Grupo. Similiar a seu uso, temos as seguintes funções: min, max, sum, avg.
+; O count nos permite retornar a quantidade de Customers de cada Grupo. 
+; Similiar a seu uso, temos as seguintes funções: min, max, sum, avg.
 ```
 
 ### Retornar 3 maiores limites:
@@ -138,5 +142,6 @@ Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
                 [?customer :customer/limit ?customer-limit]]
        (db.boostrap/get-db)))
 
-; Eu ainda não consegui retornar um max n com outro campo junto.. retornar somente os top 3 valores não me parece o tipo de operação mais útil do mundo :)
+; Eu ainda não consegui retornar um max n com outro campo junto.. 
+; retornar somente os top 3 valores não me parece o tipo de operação mais útil do mundo :)
 ```
