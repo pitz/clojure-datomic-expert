@@ -12,7 +12,7 @@ Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
 
 ```clojure
 (defn get-customer [db id]
-  (d/pulldb '[*] [:customer/id id]))
+  (d/pull db '[*] [:customer/id id]))
 
 ; Uma maneira simples de buscar todos os dados de um registro filtrando apelas pelo seu ID.
 ```
