@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3cbf7892-0f03-4ddc-a95f-0597ad53762c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datomic-expert.iml" beforeDir="false" afterPath="$PROJECT_DIR$/datomic-expert.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project.clj" beforeDir="false" afterPath="$PROJECT_DIR$/project.clj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/datomic_expert/core.clj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/datomic_expert/core_test.clj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/datomicexpert/core.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/datomicexpert/core.clj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +27,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
   </component>
-  <component name="ReplState" timestamp="1640867001803">{:repl-history {:ide [], :local [], :remote []}}</component>
+  <component name="ReplState" timestamp="1640870834668">{:repl-history {:ide [], :local [], :remote []}}</component>
   <component name="RunManager">
     <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
       <setting name="displayName" value="" />

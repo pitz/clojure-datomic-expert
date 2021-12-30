@@ -18,6 +18,9 @@
          :where [?customer :customer/name ?name]]
        (db.boostrap/get-db)))
 
+(doseq [name (listar-nomes)]
+  (println " @" name))
+
 ; Listar todos os nomes para clientes com limite igual a limit-value
 (defn listar-nomes-com-limit-eq [limit-value]
   (println " @ listar-nomes-com-filtro-de-limite-fixo: ")
@@ -26,6 +29,9 @@
          :where [?customer :customer/name  ?name]
                 [?customer :customer/limit ?limit-eq]]
        (db.boostrap/get-db) limit-value))
+
+(doseq [name (listar-nomes-com-limit-eq 100.20M)]
+  (println " @" name))
 
 ; Listar todos os nomes para clientes com limite maior ou igual a limit-value
 (defn listar-nomes-com-limit-ge [limit-value]
@@ -37,6 +43,9 @@
                 [(>= ?limit ?limit-ge)]]
        (db.boostrap/get-db) limit-value))
 
+(doseq [name (listar-nomes-com-limit-ge 50.00M)]
+  (println " @" name))
+
 ; Listar todos os nomes para clientes com limite maior que limit-value-gt
 (defn listar-nomes-com-limit-gt [limit-value]
   (println " @ listar-nomes-com-limit-gt: ")
@@ -47,6 +56,9 @@
          [(> ?limit ?limit-value-gt)]]
        (db.boostrap/get-db) limit-value))
 
+(doseq [name (listar-nomes-com-limit-gt 1000.00M)]
+  (println " @" name))
+
 ; Listar todos os nomes para clientes com nome iniciando com initial-name-char
 (defn listar-nomes-com-inicial [initial-name-str]
   (println " @ listar-nomes-com-inicial" initial-name-str ":")
@@ -56,6 +68,9 @@
                 [(.startsWith ?name ?initial-name-str)]]
        (db.boostrap/get-db) initial-name-str))
 
+(doseq [name (listar-nomes-com-inicial "E")]
+  (println " @" name))
+
 ; Listar todos os nomes para clientes com nome iniciando com initial-name-char
 (defn listar-nomes-com-final [final-name-str]
   (println " @ listar-nomes-com-final" final-name-str ":")
@@ -64,6 +79,9 @@
          :where [?customer :customer/name  ?name]
          [(.endsWith ?name ?final-str)]]
        (db.boostrap/get-db) final-name-str))
+
+(doseq [name (listar-nomes-com-final "z")]
+  (println " @" name))
 
 (defn parse-name [name]
   (str "Parseando o nome: " name))
@@ -76,26 +94,39 @@
                 [(datomicexpert.core/parse-name ?name) ?parsed-name]]
        (db.boostrap/get-db)))
 
-(doseq [name (listar-nomes)]
-  (println " @" name))
-
-(doseq [name (listar-nomes-com-limit-eq 100.20M)]
-  (println " @" name))
-
-(doseq [name (listar-nomes-com-limit-ge 50.00M)]
-  (println " @" name))
-
-(doseq [name (listar-nomes-com-limit-gt 1000.00M)]
-  (println " @" name))
-
-(doseq [name (listar-nomes-com-inicial "E")]
-  (println " @" name))
-
-(doseq [name (listar-nomes-com-final "z")]
-  (println " @" name))
-
 (doseq [name (listar-nomes-with-transformation-function)]
   (println " @" name))
+
+(defn listar-nomes-e-grupos []
+  (d/q '[:find   ?customer-name ?group-name
+         :keys   customer/name group/name
+         :where [?customer :customer/name  ?customer-name]
+                [?customer :customer/group ?group]
+                [?group    :group/name     ?group-name]]
+       (db.boostrap/get-db)))
+
+(listar-nomes-e-grupos)
+
+(defn count-customers-from-group []
+  (d/q '[:find   ?group-name (count ?customer-name)
+         :keys  group/name customers-count
+         :where [?customer :customer/name  ?customer-name]
+         [?customer :customer/group ?group]
+         [?group    :group/name     ?group-name]]
+       (db.boostrap/get-db)))
+
+(count-customers-from-group)
+
+(defn top-3-limits []
+  (d/q '[:find   (max 3 ?customer-limit)
+         :keys  limit
+         :where [?customer :customer/name  ?customer-name]
+                [?customer :customer/limit ?customer-limit]]
+       (db.boostrap/get-db)))
+
+(top-3-limits)
+
+
 
 ; continuar com http://www.learndatalogtoday.org/chapter/7
 
