@@ -21,7 +21,6 @@ Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
 
 ```clojure
 (defn listar-nomes []
-  (println " @ listar-nomes: ")
   (d/q '[:find  ?name
          :where [?customer :customer/name ?name]]
        (db.boostrap/get-db)))
@@ -33,7 +32,6 @@ Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
 
 ```clojure
 (defn listar-nomes-com-limit-eq [limit-value]
-  (println " @ listar-nomes-com-filtro-de-limite-fixo: ")
   (d/q '[:find  ?name
          :in    $ ?limit-eq
          :where [?customer :customer/name  ?name]
@@ -45,7 +43,6 @@ Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
 
 ```clojure
 (defn listar-nomes-com-limit-ge [limit-value]
-  (println " @ listar-nomes-com-limit-ge: ")
   (d/q '[:find  ?name
          :in    $ ?limit-ge
 	 :where [?customer :customer/name ?name]
@@ -60,7 +57,6 @@ Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
 
 ```clojure
 (defn listar-nomes-com-inicial [initial-name-str]
-  (println " @ listar-nomes-com-inicial" initial-name-str ":")
   (d/q'[:find  ?name
         :in    $ ?initial-name-str
         :where [?customer :customer/name ?name]
@@ -77,7 +73,6 @@ Todos os códigos abaixo podem ser encontrados em `datomicexpert.core`.
 (defn parse-name [name]  (str "Parseando o nome: " name))
 
 (defn listar-nomes-with-transformation-function []
-  (println " @ listar-nomes: ")
   (d/q '[:find  ?parsed-name
          :where [?customer :customer/name ?name]
                 [(datomicexpert.core/parse-name ?name) ?parsed-name]]
